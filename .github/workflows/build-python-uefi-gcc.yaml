@@ -1,14 +1,7 @@
-# GitHub actions workflow to build python uefi using gcc
-#
-# Copyright (c) 2023-2024, Intel Corporation. All rights reserved.
-# SPDX-License-Identifier: BSD-2-Clause-Patent
-#
+name: Build Python Interpreter for UEFI with GCC (IA32)
 
-name: Build Python Interpreter for UEFI with GCC
-
-# Evento para acionar manualmente o workflow
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Garante que o workflow possa ser iniciado manualmente
 
 jobs:
   build:
@@ -45,12 +38,13 @@ jobs:
         cd AppPkg/Applications/Python/Python-3.6.8/
         python3 srcprep.py
 
-    - name: Build Python UEFI
+    - name: Build Python UEFI (IA32)
       run: |
         export PACKAGES_PATH=`pwd`/edk2:`pwd`:
         export EDK2_LIBC_PATH=`pwd`
         cd edk2
         . edksetup.sh
+        # Modificando a arquitetura para IA32 com a flag -m32
         build -t GCC5 -a IA32 -b RELEASE -p $EDK2_LIBC_PATH/AppPkg/AppPkg.dsc -D BUILD_PYTHON368
 
     - name: Create PyUEFI package
@@ -58,6 +52,7 @@ jobs:
         export WORKSPACE=`pwd`/edk2
         echo WORKSPACE is $WORKSPACE
         export EDK2_LIBC_PATH=`pwd`
+        # Certifique-se de que o script de criação do pacote esteja configurado corretamente para IA32
         . AppPkg/Applications/Python/Python-3.6.8/create_python_pkg.sh GCC5 RELEASE IA32 myUEFIPy
 
     - name: List build artifacts

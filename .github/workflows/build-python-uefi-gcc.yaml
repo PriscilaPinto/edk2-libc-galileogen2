@@ -33,6 +33,10 @@ jobs:
         . edksetup.sh
         make -C BaseTools
 
+    - name: Modify AppPkg.dsc
+      run: |
+        echo "GCC:*_*_*_CC_FLAGS = -lgcc" >> AppPkg/AppPkg.dsc
+
     - name: Run srcprep.py
       run: |
         cd AppPkg/Applications/Python/Python-3.6.8/

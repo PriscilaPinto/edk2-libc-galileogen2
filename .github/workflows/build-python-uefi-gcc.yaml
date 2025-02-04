@@ -44,7 +44,7 @@ jobs:
         export EDK2_LIBC_PATH=`pwd`
         cd edk2
         . edksetup.sh
-        build -t GCC5 -a IA32 -b RELEASE -p $EDK2_LIBC_PATH/AppPkg/AppPkg.dsc -D BUILD_PYTHON368 -lgcc
+        build -t GCC5 -a IA32 -b RELEASE -p $EDK2_LIBC_PATH/AppPkg/AppPkg.dsc -D BUILD_PYTHON368
 
     - name: Create PyUEFI package
       run: |

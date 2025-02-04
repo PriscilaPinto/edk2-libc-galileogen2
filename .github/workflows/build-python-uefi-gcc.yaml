@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential uuid-dev iasl git nasm python3-distutils
+        sudo apt-get install -y build-essential uuid-dev iasl git nasm python3-distutils libgcc-9-dev
 
     - name: Clone EDK2
       run: |
@@ -44,8 +44,7 @@ jobs:
         export EDK2_LIBC_PATH=`pwd`
         cd edk2
         . edksetup.sh
-        # Modificando a arquitetura para IA32 com a flag -m32
-        build -t GCC5 -a IA32 -b RELEASE -p $EDK2_LIBC_PATH/AppPkg/AppPkg.dsc -D BUILD_PYTHON368
+        build -t GCC5 -a IA32 -b RELEASE -p $EDK2_LIBC_PATH/AppPkg/AppPkg.dsc -D BUILD_PYTHON368 -lgcc
 
     - name: Create PyUEFI package
       run: |
